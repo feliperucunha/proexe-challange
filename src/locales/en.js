@@ -15,3 +15,4 @@ export const deleteModalTitle = 'Delete User';
 export const deleteConfirmationMessage = 'Are you sure you want to delete this user?';
 export const noDataMessage = 'No Data Available';
 export const refreshButton = 'Refresh';
+export const headerText = `Felipe Cunha's Dashboard`;
