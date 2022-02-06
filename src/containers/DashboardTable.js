@@ -13,10 +13,27 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ModalButton from "../components/Modal";
+import { 
+  nameLabel, 
+  usernameLabel, 
+  cityLabel, 
+  emailLabel, 
+  editButton, 
+  userList,
+  modalSubmitButton,
+  modalCancelButton, 
+  refreshButton, 
+  newUserButton, 
+  deleteButton,
+  deleteModalTitle,
+  deleteConfirmationMessage,
+  newModalTitle,
+  noDataMessage
+} from '../locales/en';
 
 const columns = [
   { id: 'id', label: 'ID', minWidth: 70 },
-  { id: 'name', label: 'Name', minWidth: 70 },
+  { id: 'name', label: nameLabel, minWidth: 70 },
   {
     id: 'username',
     label: 'Username',
@@ -43,20 +60,6 @@ const columns = [
     minWidth: 70,
   },
 ];
-
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  display: 'grid',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  height: 300,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 const inputStyle = {
   display: 'grid',
@@ -218,14 +221,14 @@ const DashboardTable = () => {
           <TableHead>
             <TableRow>
               <TableCell align="left" colSpan={2}>
-                User List
+                {userList}
               </TableCell>
               <TableCell align="right" colSpan={5}>
                 <ModalButton 
                   open={openNewModal}
                   setOpen={setOpenNewModal}
-                  buttonName='New User' 
-                  modalTitle='Create a New User'
+                  buttonName={newUserButton}
+                  modalTitle={newModalTitle}
                   buttonStyle='contained'
                 >
                   <>
@@ -233,22 +236,20 @@ const DashboardTable = () => {
                       <TextField
                         required
                         id="outlined-required"
-                        label="Name"
-                        defaultValue=""
+                        label={nameLabel}
                         value={formName}
                         onInput={e => setFormName(e.target.value)}
                       />        
                       <TextField
                         required
                         id="outlined-required"
-                        label="Email"
-                        defaultValue=""
+                        label={emailLabel}
                         value={formEmail}
                         onInput={e => setFormEmail(e.target.value)}
                       />
                     </Box>
-                    <Button type="submit" onClick={handleCreateNewUser} variant="contained">Submit</Button>
-                    <Button onClick={handleCancelButton} color="error">Cancel</Button>
+                    <Button type="submit" onClick={handleCreateNewUser} variant="contained">{modalSubmitButton}</Button>
+                    <Button onClick={handleCancelButton} color="error">{modalCancelButton}</Button>
                   </>
                 </ModalButton>
               </TableCell>
@@ -288,10 +289,10 @@ const DashboardTable = () => {
                           {user.address.city}
                         </TableCell>
                         <TableCell>
-                        <Button onClick={() => {editModal(user)}} variant="contained">Edit</Button>
+                        <Button onClick={() => {editModal(user)}} variant="contained">{editButton}</Button>
                         </TableCell>
                         <TableCell>
-                          <Button onClick={() => {openConfirmDeleteModal(user.id)}} color="error" variant="outlined">Delete</Button>
+                          <Button onClick={() => {openConfirmDeleteModal(user.id)}} color="error" variant="outlined">{deleteButton}</Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -301,35 +302,35 @@ const DashboardTable = () => {
             ) : (
               <Box style={emptyTableStyles}>
                 <Typography>
-                  No Data Available
+                  {noDataMessage}
                 </Typography>
                 <Button onClick={refreshData}>
-                  Refresh
+                  {refreshButton}
                 </Button>
               </Box>
             )}
             <ModalButton 
               open={openDeleteModal}
               setOpen={setOpenDeleteModal}
-              buttonName='Delete' 
-              modalTitle='Delete User'
+              buttonName={deleteButton}
+              modalTitle={deleteModalTitle}
               buttonColor='error'
               buttonStyle='outlined'
               noButton
             >
               <>
                 <Typography>
-                  Are you sure you want to delete this user?
+                  {deleteConfirmationMessage}
                 </Typography>
-                <Button onClick={() => {handleDeleteUser(selectedUser)}} variant="contained">Submit</Button>
-                <Button onClick={() => setOpenDeleteModal(false)} color="error">Cancel</Button>
+                <Button onClick={() => {handleDeleteUser(selectedUser)}} variant="contained">{modalSubmitButton}</Button>
+                <Button onClick={() => setOpenDeleteModal(false)} color="error">{modalCancelButton}</Button>
               </>
             </ModalButton>
             {selectedUser && (
               <ModalButton 
                 open={openEditModal}
                 setOpen={setOpenEditModal}
-                buttonName='Delete' 
+                buttonName=''
                 modalTitle={`Editing '${selectedUser.username}' User`}
                 buttonColor='error'
                 buttonStyle='outlined'
@@ -341,32 +342,32 @@ const DashboardTable = () => {
                     <TextField
                       required
                       id="outlined-required"
-                      label="Name"
+                      label={nameLabel}
                       value={formName}
                       onInput={e => setFormName(e.target.value)}
                     />        
                     <TextField
                       id="outlined"
-                      label="Username"
+                      label={usernameLabel}
                       value={formUsername}
                       onInput={e => setFormUsername(e.target.value)}
                     />
                     <TextField
                       required
                       id="outlined-required"
-                      label="Email"
+                      label={emailLabel}
                       value={formEmail}
                       onInput={e => setFormEmail(e.target.value)}
                     />
                     <TextField
                       id="outlined"
-                      label="City"
+                      label={cityLabel}
                       value={formCity}
                       onInput={e => setFormCity(e.target.value)}
                     />
                   </Box>
-                  <Button type="submit" onClick={() => {handleEditUser(selectedUser)}} variant="contained">Submit</Button>
-                  <Button onClick={() => handleCancelEdit(selectedUser)} color="error">Cancel</Button>
+                  <Button type="submit" onClick={() => {handleEditUser(selectedUser)}} variant="contained">{modalSubmitButton}</Button>
+                  <Button onClick={() => handleCancelEdit(selectedUser)} color="error">{modalCancelButton}</Button>
                 </>
               </ModalButton>
             )}

@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DashboardHomePage from "./containers/DashboardHomePage";
 import Header from "./containers/Header";
 import "./App.css";
+import { notFoundMessage } from "./locales/en";
 
 function App() {
-  const notFoundMessage = '404 Not Found!';
   return (
     <div className="App">
       <Router>
