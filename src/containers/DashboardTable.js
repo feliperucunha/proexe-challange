@@ -193,6 +193,8 @@ const DashboardTable = () => {
 
     if (isFormValid) {
       setOpenEditModal(false);
+      setFormName('');
+      setFormEmail('');
     };
   };
 
